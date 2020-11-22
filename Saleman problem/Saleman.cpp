@@ -88,8 +88,8 @@ void normalize() {
 }
 
 
-void mutate(int *mutatedOrder[]) {
-	int ptr[] = *mutatedOrder[];
+void mutate(int (&mutatedOrder)[citySize]) {
+	
 }
 
 int listOfPopulationArray[citySize];
@@ -117,8 +117,8 @@ void nextGeneration() {
 	for (int i = 0; i < populationSize; i++) {
 		for (int v = 0; v < populationSize; v++) {
 			//new_population[i][v] = _population[i][v];
-			int* pickedOrderPointer[] = pickOne(_population, fitness);
-			mutate(pickedOrderPointer);
+			pickOne(_population, fitness);
+			mutate(listOfPopulationArray);
 			new_population[i][v];
 		}
 	}

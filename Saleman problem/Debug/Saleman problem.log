@@ -4,6 +4,6 @@ C:\Users\Simon\source\repos\Saleman problem\Saleman problem\Saleman.cpp(66,15): 
 C:\Users\Simon\source\repos\Saleman problem\Saleman problem\Saleman.cpp(67,15): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
 C:\Users\Simon\source\repos\Saleman problem\Saleman problem\Saleman.cpp(68,9): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
 C:\Users\Simon\source\repos\Saleman problem\Saleman problem\Saleman.cpp(99,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\Simon\source\repos\Saleman problem\Saleman problem\Saleman.cpp(132,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\Simon\source\repos\Saleman problem\Saleman problem\Saleman.cpp(157,21): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Simon\source\repos\Saleman problem\Saleman problem\Saleman.cpp(134,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\Simon\source\repos\Saleman problem\Saleman problem\Saleman.cpp(159,21): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
   Saleman problem.vcxproj -> C:\Users\Simon\source\repos\Saleman problem\Debug\Traveling Salesperson.exe
