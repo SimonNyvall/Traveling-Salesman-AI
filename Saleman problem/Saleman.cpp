@@ -88,12 +88,12 @@ void normalize() {
 }
 
 
-void mutate(int *mutatedOrder) {
-	int ptr[] = *mutatedOrder;
+void mutate(int *mutatedOrder[]) {
+	int ptr[] = *mutatedOrder[];
 }
 
-
-int* pickOne(int (&listOfPopulation)[populationSize][citySize], double (&prob)[populationSize]) {
+int listOfPopulationArray[citySize];
+void pickOne(int (&listOfPopulation)[populationSize][citySize], double (&prob)[populationSize]) {
 	int index = 0;
 
 	srand(time(NULL));
@@ -106,7 +106,9 @@ int* pickOne(int (&listOfPopulation)[populationSize][citySize], double (&prob)[p
 	}
 	index--;
 
-	return listOfPopulation[index];
+	for (int i = 0; i < citySize; i++) {
+		listOfPopulationArray[i] = listOfPopulation[index][i];
+	}
 }
 
 void nextGeneration() {
@@ -115,7 +117,7 @@ void nextGeneration() {
 	for (int i = 0; i < populationSize; i++) {
 		for (int v = 0; v < populationSize; v++) {
 			//new_population[i][v] = _population[i][v];
-			int* pickedOrderPointer = pickOne(_population, fitness);
+			int* pickedOrderPointer[] = pickOne(_population, fitness);
 			mutate(pickedOrderPointer);
 			new_population[i][v];
 		}
