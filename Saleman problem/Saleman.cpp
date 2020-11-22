@@ -13,6 +13,7 @@ int _population[populationSize][citySize];
 double fitness[populationSize];
 int recordDistance = 9999999;
 int bestEver[citySize];
+double mutationrate = 0.1;
 
 
 const int order[citySize] = { 0,1,2,3,4 };
@@ -46,8 +47,8 @@ void setRandomCityPoint(int cityIndex) {
 int cityA[2];
 int cityB[2];
 
-int calcDistace(int points[][2], int populationOrder[]) {
-	int sum = 0;
+double calcDistace(int points[][2], int populationOrder[]) {
+	double sum = 0;
 
 	for (int i = 0; i < citySize - 1; i++) {
 
@@ -74,7 +75,7 @@ int calcDistace(int points[][2], int populationOrder[]) {
 
 
 void normalize() {
-	int sum = 0;
+	double sum = 0;
 
 	for (int i = 0; i < populationSize; i++) {
 		sum += fitness[i];
@@ -87,8 +88,12 @@ void normalize() {
 }
 
 
+void mutate(int *mutatedOrder) {
+	int ptr[] = *mutatedOrder;
+}
 
-void pickOne(int list[][citySize]) {
+
+int* pickOne(int (&listOfPopulation)[populationSize][citySize], double (&prob)[populationSize]) {
 	int index = 0;
 
 	srand(time(NULL));
@@ -96,11 +101,12 @@ void pickOne(int list[][citySize]) {
 	r = r / 10;
 
 	while (r > 0) {
-		//r = r - list[index]
+		r = r - prob[index];
 		index++;
 	}
 	index--;
-	//return list[index];
+
+	return listOfPopulation[index];
 }
 
 void nextGeneration() {
@@ -109,7 +115,9 @@ void nextGeneration() {
 	for (int i = 0; i < populationSize; i++) {
 		for (int v = 0; v < populationSize; v++) {
 			//new_population[i][v] = _population[i][v];
-			pickOne(_population);
+			int* pickedOrderPointer = pickOne(_population, fitness);
+			mutate(pickedOrderPointer);
+			new_population[i][v];
 		}
 	}
 
@@ -143,7 +151,7 @@ int main() {
 	// Calculate the fitness and set the best fitness to bestEver
 	for (int i = 0; i < populationSize; i++) {
 
-		int d = calcDistace(cityPoints, _population[i]);
+		double d = calcDistace(cityPoints, _population[i]);
 
 		if (d < recordDistance) {
 			recordDistance = d;
