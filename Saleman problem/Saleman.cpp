@@ -10,105 +10,159 @@ const int citySize = 5;
 
 
 int _population[populationSize][citySize];
-int fitness[populationSize];
-int recordDistance = 0;
+double fitness[populationSize];
+int recordDistance = 9999999;
 int bestEver[citySize];
 
 
-int order[citySize] = { 0,1,2,3,4 };
+const int order[citySize] = { 0,1,2,3,4 };
 int cityPoints[citySize][2]; // [0]city -> [1]point x, y
 
 
 // shuffle function
 void shuffle(int deck[]) {
-    int temp = 0;
-    int randomIndex = 0;
-    for (int i = 0; i < citySize; i++) {
-        randomIndex = rand() % citySize;
-        temp = deck[i];
-        deck[i] = deck[randomIndex];
-        deck[randomIndex] = temp;
-    }
+	int temp = 0;
+	int randomIndex = 0;
+	for (int i = 0; i < citySize; i++) {
+		randomIndex = rand() % citySize;
+		temp = deck[i];
+		deck[i] = deck[randomIndex];
+		deck[randomIndex] = temp;
+	}
 }
 
+// Platns the citys
 void setRandomCityPoint(int cityIndex) {
-    // map of 100x100 points
-    for (int i = 0; i <= citySize; i++) {
-        for (int j = 0; j < 2; j++) {
-            cityPoints[i][j] = (rand() % 100 + 1);
-        }
-    }
+	// map of 100x100 points
+	for (int i = 0; i <= citySize; i++) {
+		for (int j = 0; j < 2; j++) {
+			cityPoints[i][j] = (rand() % 100 + 1);
+		}
+	}
 }
 
+
+// Calculate the sum of distance
 int cityA[2];
 int cityB[2];
 
 int calcDistace(int points[][2], int populationOrder[]) {
-    int sum = 0;
+	int sum = 0;
 
-    for (int i = 0; i < citySize - 1; i++) {
+	for (int i = 0; i < citySize - 1; i++) {
 
-        int cityAIndex = populationOrder[i];
-        for (int j = 0; j < 2; j++) {
-            cityA[j] = cityPoints[cityAIndex][j];
-        }
+		int cityAIndex = populationOrder[i];
+		for (int j = 0; j < 2; j++) {
+			cityA[j] = cityPoints[cityAIndex][j];
+		}
 
-        int cityBIndex = populationOrder[i + 1];
-        for (int q = 0; q < 2; q++) {
-            cityB[q] = cityPoints[cityBIndex][q];
-        }
+		int cityBIndex = populationOrder[i + 1];
+		for (int q = 0; q < 2; q++) {
+			cityB[q] = cityPoints[cityBIndex][q];
+		}
 
-        //Distace ekvation
-        int dPoint1 = pow((cityA[0] - cityB[0]), 2);
-        int dPoint2 = pow((cityB[1] - cityA[1]), 2);
-        int d = sqrt(dPoint1 + dPoint2);
+		//Distace ekvation
+		int dPoint1 = pow((cityA[0] - cityB[0]), 2);
+		int dPoint2 = pow((cityB[1] - cityA[1]), 2);
+		int d = sqrt(dPoint1 + dPoint2);
 
-        sum += d;
-    }
-    return sum;
+		sum += d;
+	}
+	return sum;
+}
+
+
+
+void normalize() {
+	int sum = 0;
+
+	for (int i = 0; i < populationSize; i++) {
+		sum += fitness[i];
+	}
+
+	for (int j = 0; j < populationSize; j++) {
+		fitness[j] = fitness[j] / sum;
+	}
+
+}
+
+
+
+void pickOne(int list[][citySize]) {
+	int index = 0;
+
+	srand(time(NULL));
+	double r = (rand() % 10);
+	r = r / 10;
+
+	while (r > 0) {
+		//r = r - list[index]
+		index++;
+	}
+	index--;
+	//return list[index];
+}
+
+void nextGeneration() {
+	int new_population[populationSize][citySize];
+
+	for (int i = 0; i < populationSize; i++) {
+		for (int v = 0; v < populationSize; v++) {
+			//new_population[i][v] = _population[i][v];
+			pickOne(_population);
+		}
+	}
+
+	for (int j = 0; j < populationSize; j++) {
+		for (int q = 0; q < citySize; q++) {
+			_population[j][q] = new_population[j][q];
+		}
+	}
 }
 
 int main() {
-    srand(time(NULL)); // Seeds the random number generator
+	srand(time(NULL)); // Seeds the random number generator
 
-    // Populate the population with an array from 0..5 according to the city size
-    for (int i = 0; i <= populationSize; i++) {
-        for (int j = 0; j < citySize; j++) {
-            _population[i][j] = order[j];
-        }
-    }
-    
-    // Shuffle the array
-    for (int arrayCount = 0; arrayCount < populationSize; arrayCount++) {
-        shuffle(_population[arrayCount]);
-    }
+	// Populate the population with an array from 0..5 according to the city size
+	for (int i = 0; i <= populationSize; i++) {
+		for (int j = 0; j < citySize; j++) {
+			_population[i][j] = order[j];
+		}
+	}
 
-    // ------------------------------------------------------------------------
-    for (int i = 0; i < citySize; i++) {
-        setRandomCityPoint(i);
-    }
+	// Shuffle the array
+	for (int arrayCount = 0; arrayCount < populationSize; arrayCount++) {
+		shuffle(_population[arrayCount]);
+	}
 
-    // Calculate the fitness and set the best fitness to bestEver
-    for (int i = 0; i < populationSize; i++) {
-        
-        int d = calcDistace(cityPoints, _population[i]);
+	// ------------------------------------------------------------------------
+	for (int i = 0; i < citySize; i++) {
+		setRandomCityPoint(i);
+	}
 
-        if (d > recordDistance) {
-            recordDistance = d;
+	// Calculate the fitness and set the best fitness to bestEver
+	for (int i = 0; i < populationSize; i++) {
 
-            for (int j = 0; j < citySize; j++) {
-                bestEver[j] = _population[i][j];
-            }
-        }
-        fitness[i] = d;
-    }
+		int d = calcDistace(cityPoints, _population[i]);
 
-    
-    // Print result for debuging
-    for (int i = 0; i < citySize; i++) {
-        std::cout << bestEver[i] << std::endl;
-    }
-    
+		if (d < recordDistance) {
+			recordDistance = d;
+
+			for (int j = 0; j < citySize; j++) {
+				bestEver[j] = _population[i][j];
+			}
+		}
+		fitness[i] = 1 / (d + 1);
+	}
+
+	normalize();
+	nextGeneration();
+
+	// Print result for debuging
+	for (int i = 0; i < citySize; i++) {
+		std::cout << bestEver[i] << std::endl;
+	}
+
 }
 
 

@@ -1,7 +1,9 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(491,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Saleman problem.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   Saleman.cpp
-C:\Users\Simon\source\repos\Saleman problem\Saleman problem\Saleman.cpp(62,21): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\Simon\source\repos\Saleman problem\Saleman problem\Saleman.cpp(63,21): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\Simon\source\repos\Saleman problem\Saleman problem\Saleman.cpp(64,15): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\Simon\source\repos\Saleman problem\Saleman problem\Saleman.cpp(72,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\Simon\source\repos\Saleman problem\Saleman problem\Saleman.cpp(65,15): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\Simon\source\repos\Saleman problem\Saleman problem\Saleman.cpp(66,15): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\Simon\source\repos\Saleman problem\Saleman problem\Saleman.cpp(67,9): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\Simon\source\repos\Saleman problem\Saleman problem\Saleman.cpp(80,20): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Simon\source\repos\Saleman problem\Saleman problem\Saleman.cpp(94,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\Simon\source\repos\Saleman problem\Saleman problem\Saleman.cpp(124,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   Saleman problem.vcxproj -> C:\Users\Simon\source\repos\Saleman problem\Debug\Traveling Salesperson.exe
