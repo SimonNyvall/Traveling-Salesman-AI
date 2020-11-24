@@ -4,21 +4,24 @@
 
 using namespace std;
 
-// Global Varibles.
-const int populationSize = 10;
-const int citySize = 5;
+#pragma region Global Varibles
+const int populationSize = 5;
+const int citySize = 10;
 
 
 int _population[populationSize][citySize];
 double fitness[populationSize];
 int recordDistance = 9999999;
 int bestEver[citySize];
-double mutationrate = 0.1;
+//double mutationrate = 0.1;
 
-
-const int order[citySize] = { 0,1,2,3,4 };
+const int order[citySize] = { 0,1,2,3,4,5,6,7,8,9 };
 int cityPoints[citySize][2]; // [0]city -> [1]point x, y
 
+#pragma endregion
+
+
+#pragma region population and city initialization
 
 // shuffle function
 void shuffle(int deck[]) {
@@ -42,12 +45,16 @@ void setRandomCityPoint(int cityIndex) {
 	}
 }
 
+#pragma endregion 
+
 
 // Calculate the sum of distance
-int cityA[2];
-int cityB[2];
-
 double calcDistace(int points[][2], int populationOrder[]) {
+
+	int cityA[2];
+	int cityB[2];
+
+
 	double sum = 0;
 
 	for (int i = 0; i < citySize - 1; i++) {
@@ -73,7 +80,7 @@ double calcDistace(int points[][2], int populationOrder[]) {
 }
 
 
-
+// Normalize the fitness values
 void normalize() {
 	double sum = 0;
 
@@ -88,15 +95,37 @@ void normalize() {
 }
 
 
-void mutate(int (&mutatedOrder)[citySize]) {
-	
+#pragma region Mutation
+
+// Swaping for the mutation function
+int swapMutatedOrder[citySize];
+void swap(int(&mutatedOrder)[citySize], int indexA, int indexB) {
+	int temp1 = mutatedOrder[indexA];
+	int temp2 = mutatedOrder[indexB];
+	mutatedOrder[indexB] = temp1;
+	mutatedOrder[indexA] = temp2;
+
+	for (int i = 0; i < citySize; i++) {
+		swapMutatedOrder[i] = mutatedOrder[i];
+	}
+}
+
+
+// Mutate an array, by swiching two index points
+void mutate(int(&mutatedOrder)[citySize]) {
+	int indexA = floor(rand() % citySize);
+	int indexB = floor(rand() % citySize);
+
+	swap(mutatedOrder, indexA, indexB);
 }
 
 int listOfPopulationArray[citySize];
-void pickOne(int (&listOfPopulation)[populationSize][citySize], double (&prob)[populationSize]) {
+void pickOne(int(&listOfPopulation)[populationSize][citySize], double(&prob)[populationSize]) {
 	int index = 0;
 
-	srand(time(NULL));
+	srand(time(NULL)); // Seed
+
+	// Picking one array of elemants
 	double r = (rand() % 10);
 	r = r / 10;
 
@@ -111,16 +140,21 @@ void pickOne(int (&listOfPopulation)[populationSize][citySize], double (&prob)[p
 	}
 }
 
+#pragma endregion
+
+
 void nextGeneration() {
 	int new_population[populationSize][citySize];
 
+	// pick one array (one elemnt of the population array) and mutate it.
 	for (int i = 0; i < populationSize; i++) {
-		for (int v = 0; v < populationSize; v++) {
-			//new_population[i][v] = _population[i][v];
-			pickOne(_population, fitness);
-			mutate(listOfPopulationArray);
-			new_population[i][v];
+		pickOne(_population, fitness);
+		mutate(listOfPopulationArray);
+		for (int v = 0; v < citySize; v++) {
+
+			new_population[i][v] = swapMutatedOrder[v];
 		}
+
 	}
 
 	for (int j = 0; j < populationSize; j++) {
@@ -131,6 +165,8 @@ void nextGeneration() {
 }
 
 int main() {
+
+
 	srand(time(NULL)); // Seeds the random number generator
 
 	// Populate the population with an array from 0..5 according to the city size
@@ -140,39 +176,51 @@ int main() {
 		}
 	}
 
-	// Shuffle the array
+	// Shuffle an array (population) shuffle
 	for (int arrayCount = 0; arrayCount < populationSize; arrayCount++) {
 		shuffle(_population[arrayCount]);
 	}
 
-	// ------------------------------------------------------------------------
+	// Sets random points for the cities.
 	for (int i = 0; i < citySize; i++) {
 		setRandomCityPoint(i);
 	}
 
-	// Calculate the fitness and set the best fitness to bestEver
-	for (int i = 0; i < populationSize; i++) {
 
-		double d = calcDistace(cityPoints, _population[i]);
+	int generation = 0;
+	while (generation < 100) {
 
-		if (d < recordDistance) {
-			recordDistance = d;
+		// Calculate the fitness and set the best fitness to bestEver
+		for (int i = 0; i < populationSize; i++) {
 
-			for (int j = 0; j < citySize; j++) {
-				bestEver[j] = _population[i][j];
+			double d = calcDistace(cityPoints, _population[i]);
+
+			if (d < recordDistance) {
+				recordDistance = d;
+
+				for (int j = 0; j < citySize; j++) {
+					bestEver[j] = _population[i][j];
+				}
 			}
+			fitness[i] = 1 / (d + 1);
 		}
-		fitness[i] = 1 / (d + 1);
+
+		// Normalize the fitness, so the best can be picked more often
+		normalize();
+
+		// Sets upp the nexr generation, with mutation
+		nextGeneration();
+
+		// Print result for debuging
+		for (int i = 0; i < citySize; i++) {
+			std::cout << bestEver[i] << std::endl;
+
+		}
+		std::cout << std::endl;
+
+		generation++;
+
 	}
-
-	normalize();
-	nextGeneration();
-
-	// Print result for debuging
-	for (int i = 0; i < citySize; i++) {
-		std::cout << bestEver[i] << std::endl;
-	}
-
 }
 
 
