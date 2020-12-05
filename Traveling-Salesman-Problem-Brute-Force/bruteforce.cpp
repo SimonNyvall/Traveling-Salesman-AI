@@ -33,19 +33,24 @@ class Timer{ // returns a long long
 #pragma region Globals Varibles
 // Globals Varibles
 
-const int arraySize = 5;
+const int arraySize = 10;
 
 std::vector<vector<int>> permuntations(0);
 
-int order[arraySize] = {
-    0, 1, 2, 3, 4};
+int order[arraySize];
 
 int globalPoints[arraySize][2] = {
-    {7, 84},
-    {68, 62},
-    {35, 72},
-    {48, 55},
-    {15, 68}
+    {3, 96},
+    {76, 50},
+    {83, 69},
+    {43, 77},
+    {47, 5},
+    {4, 90},
+    {77, 55},
+    {55, 63},
+    {47, 66},
+    {43, 2}
+    
 };
 
 int bestEver = 999999;
@@ -54,6 +59,12 @@ int bestRoute[arraySize];
 #pragma endregion
 
 //---------------------------------------------------------------
+
+void populateOrder(){
+	for (int i = 0; i < arraySize; i++){
+		order[i] = i;
+	}
+}
 
 class CalcPermuntations{
 
@@ -147,38 +158,46 @@ double calcDistace(int (&populationOrder)[arraySize]) {
 	return sum;
 }
 
-
-
 int main()
 {
-    // Permutation state
-    vectorResize(arraySize);
-    CalcPermuntations calcPermuntations;
-    calcPermuntations.permute(order, 0, arraySize - 1);
+    {
+        Timer timer;
+        populateOrder();
 
-    //--------------------------------------------------------
+        // Permutation state
+        vectorResize(arraySize);
+        CalcPermuntations calcPermuntations;
+        calcPermuntations.permute(order, 0, arraySize - 1);
 
-    // Calculate distace state
-    int a [arraySize];
-    for (int i = 0; i < permuntations.size(); i++){
-        for (int j = 0; j < arraySize; j++){
-            a[j] = permuntations[i][j];
-        }
-    double routeValue = calcDistace(a);
-    if (bestEver > routeValue){
-        bestEver = routeValue;
-        for (int q = 0; q < arraySize; q++){
-            bestRoute[q] = a[q];
+        //--------------------------------------------------------
+
+        // Calculate distace state
+        int a[arraySize];
+        for (int i = 0; i < permuntations.size(); i++)
+        {
+            for (int j = 0; j < arraySize; j++)
+            {
+                a[j] = permuntations[i][j];
+            }
+            double routeValue = calcDistace(a);
+            if (bestEver > routeValue)
+            {
+                bestEver = routeValue;
+                for (int q = 0; q < arraySize; q++)
+                {
+                    bestRoute[q] = a[q];
+                }
+            }
         }
     }
-    }
-
     // Prints the results
     cout << "Fastest path: ";
-   for (int i = 0; i < arraySize; i++){
-       cout << bestRoute[i];
-   }
-   cout << endl << bestEver << " a.u  traveld" << endl;
+    for (int i = 0; i < arraySize; i++)
+    {
+        cout << bestRoute[i];
+    }
+    cout << endl
+         << bestEver << " a.u  traveld" << endl;
 
     return 0;
 }
