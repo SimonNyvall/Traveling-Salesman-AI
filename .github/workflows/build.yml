@@ -1,0 +1,28 @@
+name: C++ Build Workflow
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Build C++ Code
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up C++ Environment
+      uses: actions/setup-cpp@v1
+      with:
+        compiler: 'gcc'
+        version: '11'
+
+    - name: Build SalemanAI
+      run: |
+        g++ -o SalemanAI AI/SalemanAI.cpp
+        ./SalemanAI
+
+    - name: Build SalemanBruteforce
+      run: |
+        g++ -o SalemanBruteforce bruteforce/SalemanBruteforce.cpp
+        ./SalemanBruteforce
