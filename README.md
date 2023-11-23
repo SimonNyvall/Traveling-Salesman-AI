@@ -18,7 +18,7 @@ This project, developed as part of my gymnasium (high school) studies, demonstra
 Clone the repository to your local machine:
 
 ```bash
-git clone https://github.com/SimonNyvall/Traveling-Salesman-Problem.git
+git clone https://github.com/SimonNyvall/git@github.com:SimonNyvall/Traveling-Salesman-AI.git
 ```
 
 ### Usage
