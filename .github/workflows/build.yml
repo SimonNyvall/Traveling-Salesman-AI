@@ -17,9 +17,7 @@ jobs:
     - name: Build SalemanAI
       run: |
         g++ -o SalemanAI AI/SalemanAI.cpp
-        ./SalemanAI
 
     - name: Build SalemanBruteforce
       run: |
         g++ -o SalemanBruteforce bruteforce/SalemanBruteforce.cpp
-        ./SalemanBruteforce
