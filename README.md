@@ -1,4 +1,4 @@
-# Genetic Algorithm vs Brute Force Comparison
+# Genetic Algorithm vs Brute Force Comparison [![C++ Build Workflow](https://github.com/SimonNyvall/Traveling-Salesman-AI/actions/workflows/build.yml/badge.svg)](https://github.com/SimonNyvall/Traveling-Salesman-AI/actions/workflows/build.yml)
 
 ## Project overview
 This project, developed as part of my gymnasium (high school) studies, demonstrates a comparison between a Genetic Algorithm (GA) and a Brute Force method. The primary aim is to analyze and compare the efficiency and effectiveness of these two approaches in solving optimization problems, such as the Traveling Salesman Problem.
