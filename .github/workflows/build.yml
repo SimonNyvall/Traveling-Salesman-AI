@@ -11,11 +11,8 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v2
 
-    - name: Set up C++ Environment
-      uses: actions/setup-cpp@v1
-      with:
-        compiler: 'gcc'
-        version: '11'
+    - name: Install GCC
+      run: sudo apt-get install g++
 
     - name: Build SalemanAI
       run: |
